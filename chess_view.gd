@@ -11,6 +11,7 @@ signal draw_claimed()
 
 const PieceMesh: Script = preload("piece_mesh.gd")
 const XiangqiMesh: Script = preload("xiangqi_mesh.gd")
+const XIANGQI_INSCRIPTION: Font = preload("assets/fonts/xiangqi_inscription.ttf")
 const INK: Color = Color(0.96, 0.95, 0.91, 1.0)
 const BOARD_Y: float = 0.24
 
@@ -84,9 +85,10 @@ func _ready() -> void:
 ## Lighting nodes remain stable because the protocol settings runtime owns their quality.
 func configure_mode(mode: String, font: Font) -> void:
 	assert(mode in ["chess", "xiangqi"], "Unknown chess presentation mode")
-	var changed: bool = mode != _mode or font != _piece_font
+	var inscription: Font = XIANGQI_INSCRIPTION if mode == "xiangqi" else font
+	var changed: bool = mode != _mode or inscription != _piece_font
 	_mode = mode
-	_piece_font = font
+	_piece_font = inscription
 	if not _ready_done:
 		_distance = 20.5 if _mode == "xiangqi" else 18.0
 		return
@@ -121,12 +123,9 @@ func _orient_xiangqi_labels() -> void:
 	if _mode != "xiangqi":
 		return
 	for river_name: String in ["ChuRiver", "HanBorder"]:
-		var river_label: Label3D = _board_geometry.get_node(river_name) as Label3D
+		var river_label: Node3D = _board_geometry.get_node(river_name) as Node3D
 		river_label.rotation.y = PI if _orientation_side < 0 else 0.0
 		river_label.position.x = (-2.05 if river_name == "ChuRiver" else 2.05) * _orientation_side
-	for piece: Node in _pieces.get_children():
-		var glyph: Label3D = piece.get_node("Glyph") as Label3D
-		glyph.rotation.y = PI if _orientation_side < 0 else 0.0
 
 ## The model is immutable presentation input. Rebuild geometry only after board changes.
 func set_model(position: Dictionary, presentation: Dictionary) -> void:
@@ -254,7 +253,7 @@ func _rebuild_pieces(board: Array) -> void:
 		var piece: int = int(board[square])
 		if piece == 0:
 			continue
-		var instance: Node3D = XiangqiMesh.create_piece(piece, _piece_font, _orientation_side) if _mode == "xiangqi" else PieceMesh.create(piece)
+		var instance: Node3D = XiangqiMesh.create_piece(piece, _piece_font) if _mode == "xiangqi" else PieceMesh.create(piece)
 		instance.position = _square_position(square)
 		_pieces.add_child(instance)
 
