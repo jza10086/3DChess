@@ -38,8 +38,8 @@ func party_setup(context: PartyAPI, config: Dictionary) -> void:
 		api.fail("chess_mode", "未知棋类模式。")
 		return
 	_rules = XiangqiRules.new() if mode == "xiangqi" else Rules.new()
-	var font: Font = api.load_asset({"package_id": api.protocol_id, "resource_key": "font_sans"}) as Font
-	get_node("ChessView").configure_mode(mode, font)
+	get_node("ChessView").i18n = api.i18n
+	get_node("ChessView").configure_mode(mode)
 
 func _ready() -> void:
 	board_state = _rules.initial_state()

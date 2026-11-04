@@ -59,3 +59,6 @@ msgstr "由房主选择，所有玩家使用同一模式；修改从下一局生
 
 msgid "棋局规则"
 msgstr "棋局规则"
+
+msgid "hud.seat"
+msgstr "{side}　{player}"
