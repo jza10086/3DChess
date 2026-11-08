@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "core_api_major": 4,
-  "package_version": "1.0.0",
+  "package_version": "1.0.1",
   "id": "godot_party_default_3d_chess",
   "name": "3D 国际象棋",
   "kind": "minigame",
@@ -18,7 +18,7 @@
   "introduction": "房主可选择国际象棋或中国象棋。两位棋手轮流走棋，其余玩家观战。国际象棋支持易位、吃过路兵与升变；中国象棋遵守九宫、河界、蹩马腿、塞象眼、炮架及将帅照面规则，将死或困毙获胜。中国象棋长将、长捉与无吃子回合不自动裁决，可协议和棋。胜1分，负0分，和棋各0.5分。",
   "cover": "assets/cover.svg",
   "dependencies": {
-    "godot_party_default_protocol": "1.0.0"
+    "godot_party_default_protocol": "1.0.1"
   },
   "adapters": [
     {
