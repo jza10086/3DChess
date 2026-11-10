@@ -17,6 +17,8 @@ var sides: Array[String] = []
 var _rules: RefCounted = Rules.new()
 var _pages: Control
 var _version: int = 0
+var _published_version: int = -1
+var _published_ply: int = 0
 var _history: Array[String] = []
 var _selected: int = -1
 var _promotion_move: Dictionary = {}
@@ -229,12 +231,34 @@ func _message(sender: Dictionary, topic: StringName, payload: Variant) -> void:
 		return
 	if payload.get("session") != api.session_id or payload.get("scope") != api.scope_id:
 		return
+	if topic == &"chess/rejected" and sender.get("peer_id") == 1:
+		_pending = false
+		_notice = "操作未被接受，请根据当前棋局重新选择。"
+		_refresh()
+		return
 	if topic == STATE_TOPIC:
-		if api.is_host() or sender.get("peer_id") != 1 or not _valid_snapshot(payload):
+		if api.is_host() or sender.get("peer_id") != 1 or not payload.get("revision") is int or payload.revision < _version:
+			return
+		if payload.get("kind") == "initial":
+			if not _valid_snapshot(payload):
+				return
+			board_state = payload.position.duplicate(true)
+			_history.assign(payload.history)
+		elif payload.get("kind") == "change":
+			if payload.revision <= _version or payload.get("draw_offer") not in [-1, 0, 1] or not payload.get("finished") is bool:
+				return
+			if payload.has("move"):
+				if not payload.move is Dictionary or not _valid_move(payload.move):
+					return
+				var next: Dictionary = _rules.apply_move(board_state, payload.move)
+				if next.is_empty():
+					api.fail("chess_move_order", "收到无法应用于当前棋局的着法")
+					return
+				_history.append(_rules.move_label(board_state, payload.move, next))
+				board_state = next
+		else:
 			return
 		_version = payload.revision
-		board_state = payload.position.duplicate(true)
-		_history.assign(payload.history)
 		_draw_offer = int(payload.draw_offer)
 		if payload.finished:
 			phase = Phase.SETTLING
@@ -246,9 +270,12 @@ func _message(sender: Dictionary, topic: StringName, payload: Variant) -> void:
 		if side == 0 or not payload.get("revision") is int or not payload.get("kind") is String or not payload.get("data") is Dictionary:
 			return
 		if payload.revision != _version:
-			_publish()
+			_reject_action(sender.peer_id)
 			return
+		var previous: int = _version
 		_accept_action(side, payload.kind, payload.data)
+		if _version == previous:
+			_reject_action(sender.peer_id)
 
 func _valid_snapshot(value: Dictionary) -> bool:
 	if value.get("variant") != mode:
@@ -328,14 +355,35 @@ func _valid_move(move: Dictionary) -> bool:
 		and move.from >= 0 and move.from < board_state.board.size() and move.to >= 0 and move.to < board_state.board.size() \
 		and move.get("promotion", 0) in ([0] if mode == "xiangqi" else [0, 2, 3, 4, 5])
 
-func _publish() -> void:
+func _publish() -> Error:
 	_pending = false
-	var error: Error = api.net.broadcast(STATE_TOPIC, {"session": api.session_id, "scope": api.scope_id,
-		"revision": _version, "variant": mode, "position": board_state, "history": _history,
-		"draw_offer": _draw_offer, "finished": phase == Phase.SETTLING}, false)
+	if _published_version == _version:
+		_refresh()
+		return OK
+	var message: Dictionary = {"session": api.session_id, "scope": api.scope_id, "revision": _version,
+		"variant": mode, "draw_offer": _draw_offer, "finished": phase == Phase.SETTLING}
+	if _published_version < 0:
+		message["kind"] = "initial"
+		message["position"] = board_state
+		message["history"] = _history
+	else:
+		message["kind"] = "change"
+		if board_state.ply != _published_ply:
+			message["move"] = board_state.last_move
+	var error: Error = api.net.broadcast(STATE_TOPIC, message, MultiplayerPeer.TRANSFER_MODE_RELIABLE, false)
 	if error != OK:
+		party_stop(&"chess_state")
 		api.fail("chess_state", error_string(error))
+		return error
+	_published_version = _version
+	_published_ply = board_state.ply
 	_refresh()
+	return OK
+
+func _reject_action(peer: int) -> void:
+	var error: Error = api.net.send_to_peer(peer, &"chess/rejected", {"session": api.session_id, "scope": api.scope_id})
+	if error != OK:
+		api.fail("chess_rejection", error_string(error))
 
 func _reset_selection() -> void:
 	_pending = false
@@ -377,8 +425,10 @@ func _finish_game(winner: int, reason: String) -> void:
 	var result: Dictionary = {"request_id": request.request_id, "reason": "completed", "rankings": rows,
 		"columns": [{"key": "score", "title": "本轮分数", "format": "decimal"}],
 		"game_data": {"variant": mode, "outcome": reason, "winner": winner, "moves": _history, "fen": _rules.to_fen(board_state)}}
-	_publish()
-	var error: Error = _pages.present(result)
+	var error: Error = _publish()
+	if error != OK:
+		return
+	error = _pages.present(result)
 	if error != OK:
 		api.fail("chess_result", error_string(error))
 
