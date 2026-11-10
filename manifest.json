@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
   "core_api_major": 5,
-  "package_version": "1.0.7",
-  "id": "godot_party_default_3d_chess",
+  "package_version": "1.0.8",
+  "id": "gp_3d_chess",
   "name": "3D 国际象棋",
   "kind": "minigame",
   "supported_systems": ["windows"],

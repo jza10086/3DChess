@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bbih5rv0fdn3h"
-path="res://.godot/imported/cover.svg-2143905e19fa5ffbceafea1f9ba129de.ctex"
+path="res://.godot/imported/cover.svg-a0327667a7d9f414802ed2d8a287097d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_3d_chess/assets/cover.svg"
-dest_files=["res://.godot/imported/cover.svg-2143905e19fa5ffbceafea1f9ba129de.ctex"]
+source_file="res://games/minigame/gp_3d_chess/assets/cover.svg"
+dest_files=["res://.godot/imported/cover.svg-a0327667a7d9f414802ed2d8a287097d.ctex"]
 
 [params]
 

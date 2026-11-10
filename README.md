@@ -4,7 +4,7 @@ GodotParty API 4 双模式小游戏源码包。全幅棋盘、透视视角、原
 
 ## 安装与开局
 
-将本仓库放到 GodotParty 的 `games/minigame/godot_party_default_3d_chess/`，重启后由 Catalog 扫描包的 `manifest.json`。从主仓 `cedbdf4` 起，默认小游戏轮换会列出所有已安装、可玩且协议兼容的小游戏，不再需要修改它的白名单；房主仍须在“小游戏池”中勾选并应用。本包依赖 `godot_party_default_protocol` 1.0.0，须提供 `round_pages`、`briefing_gate`、`settlement_gate` 与 `font_sans` 公开资源。
+将本仓库放到 GodotParty 的 `games/minigame/gp_3d_chess/`，重启后由 Catalog 扫描包的 `manifest.json`。从主仓 `cedbdf4` 起，默认小游戏轮换会列出所有已安装、可玩且协议兼容的小游戏，不再需要修改它的白名单；房主仍须在“小游戏池”中勾选并应用。本包依赖 `godot_party_default_protocol` 1.0.0，须提供 `round_pages`、`briefing_gate`、`settlement_gate` 与 `font_sans` 公开资源。
 
 本仓库是小游戏包，不是另一套独立大厅或框架，不包含 `project.godot`。自动发现不负责下载仓库、更新子模块或把新游戏加入已有房间池；各客户端需先安装相同内容。其他主游戏仍可自行声明可选池白名单。本包不修改主仓 `.gitmodules` 或其他游戏。
 

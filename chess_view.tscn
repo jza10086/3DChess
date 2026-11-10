@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://games/minigame/godot_party_default_3d_chess/chess_view.gd" id="1_view"]
+[ext_resource type="Script" path="res://games/minigame/gp_3d_chess/chess_view.gd" id="1_view"]
 
 [sub_resource type="Environment" id="Environment_r6rqn"]
 background_mode = 1
