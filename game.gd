@@ -15,7 +15,7 @@ var board_state: Dictionary = {}
 var local_side: int = 0
 var sides: Array[String] = []
 var _rules: RefCounted = Rules.new()
-var _pages: Control
+@export var pages: CanvasLayer
 var _version: int = 0
 var _published_version: int = -1
 var _published_ply: int = 0
@@ -82,21 +82,17 @@ func _ready() -> void:
 	api.net.message_received.connect(_message)
 	api.players_changed.connect(_players_changed)
 	_refresh()
-	var pages_script: Script = api.load_asset({"package_id": api.protocol_id, "resource_key": "round_pages"}) as Script
-	if pages_script == null:
-		api.fail("chess_protocol", "所选协议缺少回合加载与结算资源。")
-		return
-	_pages = pages_script.new()
-	var error: Error = _pages.prepare(self, api, request, _begin_play)
+	assert(pages != null, "Assign ProtocolPages in the game scene")
+	var error: Error = pages.prepare(self, api, request, _begin_play)
 	if error != OK:
 		api.fail("chess_prepare", error_string(error))
 		return
 	_update_briefing()
 
 func _update_briefing() -> void:
-	if not is_instance_valid(_pages) or not is_instance_valid(_pages.briefing):
+	if not is_instance_valid(pages) or not is_instance_valid(pages.briefing):
 		return
-	var briefing_script: Script = _pages.briefing.get_script()
+	var briefing_script: Script = pages.briefing.get_script()
 	var content: Dictionary = briefing_script.read_content(scene_file_path.get_base_dir().path_join("manifest.json"), api)
 	content.title = "中国象棋" if mode == "xiangqi" else "国际象棋"
 	if mode == "xiangqi":
@@ -108,15 +104,15 @@ func _update_briefing() -> void:
 		{"binding": "鼠标左键", "description": "选择棋子，再选择合法落点"},
 		{"binding": "鼠标右键 / 滚轮", "description": "旋转视角 / 缩放棋盘"},
 		{"binding": api.input.binding_text(&"chess_reset_view") + " / " + api.input.binding_text(&"chess_details") + " / Esc", "description": "恢复视角 / 棋局与规则 / 菜单"}]
-	_pages.briefing.update_content(content)
+	pages.briefing.update_content(content)
 
 func _preferences_changed(_common_keys: PackedStringArray, _own_keys: PackedStringArray) -> void:
 	_view.apply_preferences(bool(api.config.get_own(&"view.show_legal_moves", true)), float(api.config.get_own(&"view.orbit_sensitivity", 1.0)))
 	_update_briefing()
 
 func party_start() -> void:
-	if is_instance_valid(_pages):
-		_pages.transport_started()
+	if is_instance_valid(pages):
+		pages.transport_started()
 
 func godot_party_graphics_targets() -> Dictionary:
 	return _view.graphics_targets() if is_instance_valid(_view) else {}
@@ -428,7 +424,7 @@ func _finish_game(winner: int, reason: String) -> void:
 	var error: Error = _publish()
 	if error != OK:
 		return
-	error = _pages.present(result)
+	error = pages.present(result)
 	if error != OK:
 		api.fail("chess_result", error_string(error))
 
@@ -486,8 +482,8 @@ func party_stop(_reason: StringName) -> void:
 	if phase == Phase.STOPPED:
 		return
 	phase = Phase.STOPPED
-	if is_instance_valid(_pages):
-		_pages.stop()
+	if is_instance_valid(pages):
+		pages.stop()
 	if api != null:
 		if api.config.effective_changed.is_connected(_preferences_changed):
 			api.config.effective_changed.disconnect(_preferences_changed)

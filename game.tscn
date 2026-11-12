@@ -1,9 +1,12 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://games/minigame/gp_3d_chess/ui/round_pages.tscn" id="protocol_pages"]
 
 [ext_resource type="Script" path="game.gd" id="1_game"]
 [ext_resource type="PackedScene" path="chess_view.tscn" id="2_view"]
 
-[node name="Chess" type="Control" groups=["party_minimal_hud"]]
+[node name="Chess" type="Control" groups=["party_minimal_hud"] node_paths=PackedStringArray("pages")]
+pages = NodePath("ProtocolPages")
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -15,3 +18,6 @@ script = ExtResource("1_game")
 
 [node name="ChessView" parent="." instance=ExtResource("2_view")]
 layout_mode = 1
+
+[node name="ProtocolPages" parent="." instance=ExtResource("protocol_pages")]
+unique_name_in_owner = true

@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://games/protocols/godot_party_default_protocol/briefing/briefing_page.tscn" id="1"]
+
+[node name="Briefing" instance=ExtResource("1")]
+
+[node name="Title" parent="View/Layout/Center/Content" index="0"]
+text = "3D 国际象棋"
+
+[node name="Introduction" parent="View/Layout/Center/Content/Columns/RightColumn/InformationPanel/InformationMargin/Information/Rules/InformationScroll" index="0"]
+text = "房主可选择国际象棋或中国象棋。两位棋手轮流走棋，其余玩家观战。国际象棋支持易位、吃过路兵与升变；中国象棋遵守九宫、河界、蹩马腿、塞象眼、炮架及将帅照面规则，将死或困毙获胜。中国象棋长将、长捉与无吃子回合不自动裁决，可协议和棋。胜1分，负0分，和棋各0.5分。"
+
+[editable path="View"]
