@@ -1,9 +1,5 @@
 extends Control
 
-## Content-owned gameplay rules, independent of package compatibility.
-static func party_definition() -> Dictionary:
-	return {"player_counts": [2, 3, 4, 5, 6, 7, 8]}
-
 ## Host-authoritative chess. Only this package owns moves, seat selection and round scores.
 ## The protocol supplies preparation/results; the parent receives one final result afterwards.
 const Rules: Script = preload("chess_rules.gd")
