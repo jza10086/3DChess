@@ -4,7 +4,7 @@ GodotParty API 4 双模式小游戏源码包。全幅棋盘、透视视角、原
 
 ## 安装与开局
 
-将本仓库放到 GodotParty 的 `games/minigame/gp_3d_chess/`，重启后由 Catalog 扫描包的 `manifest.json`。从主仓 `cedbdf4` 起，默认小游戏轮换会列出所有已安装、可玩且协议兼容的小游戏，不再需要修改它的白名单；房主仍须在“小游戏池”中勾选并应用。本包依赖 `godot_party_default_protocol` 1.0.0，须提供 `round_pages`、`briefing_gate`、`settlement_gate` 与 `font_sans` 公开资源。
+将本仓库放到 GodotParty 的 `games/minigame/GP_3d_chess/`，重启后由 Catalog 扫描包的 `manifest.json`。从主仓 `cedbdf4` 起，默认小游戏轮换会列出所有已安装、可玩且协议兼容的小游戏，不再需要修改它的白名单；房主仍须在“小游戏池”中勾选并应用。本包依赖 `GP_default_protocol` 1.0.0，须提供 `round_pages`、`briefing_gate`、`settlement_gate` 与 `font_sans` 公开资源。
 
 本仓库是小游戏包，不是另一套独立大厅或框架，不包含 `project.godot`。自动发现不负责下载仓库、更新子模块或把新游戏加入已有房间池；各客户端需先安装相同内容。其他主游戏仍可自行声明可选池白名单。本包不修改主仓 `.gitmodules` 或其他游戏。
 
@@ -62,15 +62,15 @@ GodotParty API 4 双模式小游戏源码包。全幅棋盘、透视视角、原
 
 消息通过 PartyNet 的可靠、作用域隔离通道发送。动作包含会话、作用域和状态版本；房主从真实发送者解析身份，拒绝观战者、错方、非法着法与旧版本。客户端只接收房主状态。退出时停止视图与协议辅助资源。共享画质通过 `godot_party_graphics_targets()` 登记，不改框架或其他视口。
 
-棋盘、棋子、木纹与封面为本仓库原创几何、程序材质或矢量内容。中国象棋刻字使用 Ma Shan Zheng 毛笔楷书的专用子集，随包保留 OFL 1.1 版权与许可，见 [资源许可](gp_3d_chess_credits.md)；HUD、规则和其他界面字体继续引用协议公开资源。刻印凹槽由材质模拟，不是切穿几何。临时验证脚本、日志、截图和用户配置不随源码包提交。
+棋盘、棋子、木纹与封面为本仓库原创几何、程序材质或矢量内容。中国象棋刻字使用 Ma Shan Zheng 毛笔楷书的专用子集，随包保留 OFL 1.1 版权与许可，见 [资源许可](GP_3d_chess_credits.md)；HUD、规则和其他界面字体继续引用协议公开资源。刻印凹槽由材质模拟，不是切穿几何。临时验证脚本、日志、截图和用户配置不随源码包提交。
 
 ## 验证
 
-最近记录与未完成验收见 [gp_3d_chess 开发记录](gp_3d_chess_development.md)。按本次改动选取必要检查；旧测试命令不作为当前入口。
+最近记录与未完成验收见 [GP_3d_chess 开发记录](GP_3d_chess_development.md)。按本次改动选取必要检查；旧测试命令不作为当前入口。
 
 ## 包内开发文档
 
 未带 `res://` 的源码路径以本包根目录为基准。
 
-- [资源许可](gp_3d_chess_credits.md)
-- [M16 3D 国际象棋　B　依赖 G01](gp_3d_chess_development.md)
+- [资源许可](GP_3d_chess_credits.md)
+- [M16 3D 国际象棋　B　依赖 G01](GP_3d_chess_development.md)

@@ -62,3 +62,6 @@ msgstr "棋局规则"
 
 msgid "hud.seat"
 msgstr "{side}　{player}"
+
+msgid "package.name"
+msgstr "3D 国际象棋"

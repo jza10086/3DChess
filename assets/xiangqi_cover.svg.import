@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://games/minigame/gp_3d_chess/assets/xiangqi_cover.svg"
+source_file="res://games/minigame/GP_3d_chess/assets/xiangqi_cover.svg"
 dest_files=["res://.godot/imported/xiangqi_cover.svg-85c6f72d812e31ae4c1b5847fd7af6d7.ctex"]
 
 [params]

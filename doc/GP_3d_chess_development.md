@@ -2,10 +2,10 @@
 
 来源：2026-11-07 架构审查及其最后实施记录。整理日期：2026-11-14。下列待办保留原状态；实施前核对本包源码与工作区，不以历史检查代替本次验收。
 
-[共享 G01–G03 任务](../../../protocols/godot_party_default_protocol/doc/godot_party_default_protocol_development.md) · [包说明](gp_3d_chess_guide.md)
+[共享 G01–G03 任务](../../../protocols/GP_default_protocol/doc/GP_default_protocol_development.md) · [包说明](GP_3d_chess_guide.md)
 
 
-包：`gp_3d_chess`。定位：[game.gd](../game.gd)、[chess_view.gd](../chess_view.gd) 的 `_ready()`、`configure_mode()`、`_update_camera()`、`_rebuild_markers()`。
+包：`GP_3d_chess`。定位：[game.gd](../game.gd)、[chess_view.gd](../chess_view.gd) 的 `_ready()`、`configure_mode()`、`_update_camera()`、`_rebuild_markers()`。
 
 - [ ] 给视图声明具体脚本类型/可替换引用；必需视图和页面准备完成后的调用按内部契约访问，保留初始化取消时真正需要的判断。
 - [ ] 相机初始方位/距离现在由脚本常量和 `_update_camera()` 重设；改为可编辑模式机位/参数，以这些场景值作为 reset 基准，保留运行中 orbit。

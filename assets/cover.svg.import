@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://games/minigame/gp_3d_chess/assets/cover.svg"
+source_file="res://games/minigame/GP_3d_chess/assets/cover.svg"
 dest_files=["res://.godot/imported/cover.svg-a0327667a7d9f414802ed2d8a287097d.ctex"]
 
 [params]
