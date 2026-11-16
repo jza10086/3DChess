@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://nse6va55a7uk"
-path="res://.godot/imported/xiangqi_inscription.ttf-d7279b104a0d2d0c1b163e94912c62d5.fontdata"
+path="res://.godot/imported/xiangqi_inscription.ttf-74c119f9c0e26de99563f3e54232b2a0.fontdata"
 
 [deps]
 
 source_file="res://games/minigame/GP_3d_chess/assets/fonts/xiangqi_inscription.ttf"
-dest_files=["res://.godot/imported/xiangqi_inscription.ttf-d7279b104a0d2d0c1b163e94912c62d5.fontdata"]
+dest_files=["res://.godot/imported/xiangqi_inscription.ttf-74c119f9c0e26de99563f3e54232b2a0.fontdata"]
 
 [params]
 

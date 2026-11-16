@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b0qqq7leoqkem"
-path="res://.godot/imported/xiangqi_cover.svg-85c6f72d812e31ae4c1b5847fd7af6d7.ctex"
+path="res://.godot/imported/xiangqi_cover.svg-550cbb6a698c96ec2259733b54ebd49a.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://games/minigame/GP_3d_chess/assets/xiangqi_cover.svg"
-dest_files=["res://.godot/imported/xiangqi_cover.svg-85c6f72d812e31ae4c1b5847fd7af6d7.ctex"]
+dest_files=["res://.godot/imported/xiangqi_cover.svg-550cbb6a698c96ec2259733b54ebd49a.ctex"]
 
 [params]
 
